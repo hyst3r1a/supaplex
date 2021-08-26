@@ -19,6 +19,7 @@ jobs:
   testAllModes:
     name: Test in ${{ matrix.testMode }}
     runs-on: ubuntu-latest
+    needs: notifySlackAboutWorkflowStart
     strategy:
       fail-fast: false
       matrix:
