@@ -80,7 +80,7 @@ jobs:
           SLACK_CHANNEL: general
           SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fvirginiaestrell%2Fgithub%2F&psig=AOvVaw19-3nwF60bXdXfNBjannJV&ust=1630065054878000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKCrzNbPzvICFQAAAAAdAAAAABAD
-          SLACK_MESSAGE: 'BUILD FINISHED:rocket:\n ${{GITHUB_ACTOR}} building for ${{ matrix.targetPlatform}} : ${{ job.status }}'
+          SLACK_MESSAGE: 'BUILD FINISHED:rocket:\n ${{ GITHUB_ACTOR }} building for ${{ matrix.targetPlatform }} : ${{ job.status }}'
           SLACK_TITLE: 'BUILD ROUTINE FINISHED: ${{job.status}}'
           SLACK_USERNAME: Ihor The Builder
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
