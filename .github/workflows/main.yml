@@ -3,6 +3,16 @@ name: Test project
 on: [push, pull_request]
 
 jobs:
+  notifySlackAboutWorkflowStart:
+    - uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: general
+          SLACK_COLOR: '#4287f5' # or a specific color like 'good' or '#ff00ff'
+          SLACK_ICON: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fvirginiaestrell%2Fgithub%2F&psig=AOvVaw19-3nwF60bXdXfNBjannJV&ust=1630065054878000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKCrzNbPzvICFQAAAAAdAAAAABAD
+          SLACK_MESSAGE: 'CHECK STARTED:rocket: Actor: $GITHUB_ACTOR  '
+          SLACK_TITLE: 'TEST ROUTINE FINISHED: ${{job.status}}'
+          SLACK_USERNAME: Ihor The DevOps
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
   testAllModes:
     name: Test in ${{ matrix.testMode }}
     runs-on: ubuntu-latest
@@ -15,6 +25,15 @@ jobs:
           - playmode
           - editmode
     steps:
+      - uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: general
+          SLACK_COLOR: '#4287f5' # or a specific color like 'good' or '#ff00ff'
+          SLACK_ICON: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fvirginiaestrell%2Fgithub%2F&psig=AOvVaw19-3nwF60bXdXfNBjannJV&ust=1630065054878000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKCrzNbPzvICFQAAAAAdAAAAABAD
+          SLACK_MESSAGE: 'TEST STARTED:rocket: $GITHUB_ACTOR testing for ${{ matrix.testMode }} '
+          SLACK_TITLE: 'TEST ROUTINE FINISHED: ${{job.status}}'
+          SLACK_USERNAME: Ihor The Tester
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
       - uses: actions/checkout@v2
         with:
           lfs: true
@@ -41,6 +60,15 @@ jobs:
         with:
           name: Test results for ${{ matrix.testMode }}
           path: ${{ steps.tests.outputs.artifactsPath }}
+      - uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: general
+          SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+          SLACK_ICON: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fvirginiaestrell%2Fgithub%2F&psig=AOvVaw19-3nwF60bXdXfNBjannJV&ust=1630065054878000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKCrzNbPzvICFQAAAAAdAAAAABAD
+          SLACK_MESSAGE: 'TEST FINISHED:rocket: $GITHUB_ACTOR testing for ${{ matrix.testMode }} '
+          SLACK_TITLE: 'TEST ROUTINE FINISHED: ${{job.status}}'
+          SLACK_USERNAME: Ihor The Tester
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
   
   buildForAllSupportedPlatforms:
     name: Build for ${{ matrix.targetPlatform }}
@@ -55,6 +83,15 @@ jobs:
           - iOS # Build an iOS player.
           - Android # Build an Android .apk standalone app.
     steps:
+      - uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: general
+          SLACK_COLOR: '#4287f5' # or a specific color like 'good' or '#ff00ff'
+          SLACK_ICON: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fvirginiaestrell%2Fgithub%2F&psig=AOvVaw19-3nwF60bXdXfNBjannJV&ust=1630065054878000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKCrzNbPzvICFQAAAAAdAAAAABAD
+          SLACK_MESSAGE: 'BUILD STARTED:rocket: $GITHUB_ACTOR building for ${{ matrix.testMode }} '
+          SLACK_TITLE: 'BUILD ROUTINE FINISHED: ${{job.status}}'
+          SLACK_USERNAME: Ihor The Builder
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -80,7 +117,7 @@ jobs:
           SLACK_CHANNEL: general
           SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fvirginiaestrell%2Fgithub%2F&psig=AOvVaw19-3nwF60bXdXfNBjannJV&ust=1630065054878000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKCrzNbPzvICFQAAAAAdAAAAABAD
-          SLACK_MESSAGE: 'BUILD FINISHED:rocket:\n ${GITHUB_ACTOR} building for ${{ matrix.targetPlatform }} : ${{ job.status }}'
+          SLACK_MESSAGE: 'BUILD FINISHED:rocket: $GITHUB_ACTOR building for ${{ matrix.targetPlatform }} : ${{ job.status }}'
           SLACK_TITLE: 'BUILD ROUTINE FINISHED: ${{job.status}}'
           SLACK_USERNAME: Ihor The Builder
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
