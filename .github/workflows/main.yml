@@ -1,4 +1,4 @@
-name: Test project
+name: Supaplex CI
 
 on: [push, pull_request]
 
@@ -86,14 +86,15 @@ jobs:
           - StandaloneWindows64 # Build a Windows 64-bit standalone.
           - iOS # Build an iOS player.
           - Android # Build an Android .apk standalone app.
+          - WSAPlayer # Build an Android .apk standalone app.
     steps:
       - uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: general
           SLACK_COLOR: '#4287f5' # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fvirginiaestrell%2Fgithub%2F&psig=AOvVaw19-3nwF60bXdXfNBjannJV&ust=1630065054878000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKCrzNbPzvICFQAAAAAdAAAAABAD
-          SLACK_MESSAGE: 'BUILD STARTED:rocket: ${{ github.actor }} building for ${{ matrix.testMode }} '
-          SLACK_TITLE: 'BUILD ROUTINE STARTED: ${{job.status}}'
+          SLACK_MESSAGE: 'BUILD STARTED:rocket: ${{ github.actor }} building for ${{ matrix.targetPlatform }} '
+          SLACK_TITLE: 'BUILD ROUTINE STARTED: ${{ matrix.targetPlatform }}'
           SLACK_USERNAME: Ihor The Builder
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
       - uses: actions/checkout@v2
@@ -121,7 +122,7 @@ jobs:
           SLACK_CHANNEL: general
           SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fvirginiaestrell%2Fgithub%2F&psig=AOvVaw19-3nwF60bXdXfNBjannJV&ust=1630065054878000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKCrzNbPzvICFQAAAAAdAAAAABAD
-          SLACK_MESSAGE: 'BUILD FINISHED:rocket: ${{ github.actor }} building for ${{ matrix.targetPlatform }} : ${{ job.status }}'
-          SLACK_TITLE: 'BUILD ROUTINE FINISHED: ${{job.status}}'
+          SLACK_MESSAGE: 'BUILD FINISHED:rocket: ${{ github.actor }} building for ${{ matrix.targetPlatform }}'
+          SLACK_TITLE: 'BUILD ROUTINE FINISHED: ${{ matrix.targetPlatform }}: ${{job.status}}'
           SLACK_USERNAME: Ihor The Builder
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
